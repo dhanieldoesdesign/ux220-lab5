@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <style>
+            body {
+                font-size:133%;
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <br>
+        <x-center><make-red>This is supposed to be centered, and Red.</make-red></x-center>
+        <x-center>However, This one is <big-n-bold>Big and Bold</big-n-bold></x-center>
+        <x-center><super-small>And this one is  Super Small</super-small></x-center>
+
+        <script>
+            class XCenter extends HTMLElement {
+                connectedCallback() {
+                    const existingContent = this.innerHTML;
+                    this.innerHTML = `<div style="display: flex; justify-content: center; align-items: center;">${existingContent}</div>`;
+                }
+            };
+            class Red extends HTMLElement {
+                connectedCallback() {
+                    const existingContent = this.innerHTML;
+                    this.innerHTML = `<span style="color: red;">${existingContent}</span>`;
+                }
+            };
+            class BigNBold extends HTMLElement {
+                connectedCallback() {
+                    this.style.display = "contents";
+                    this.style.fontSize = "133%";
+                    this.style.fontWeight = "bold";
+                }
+            };
+            class SuperSmall extends HTMLElement {
+                connectedCallback() {
+                    this.style.display = "contents";
+                    this.style.fontSize = "50%";
+                    this.style.fontStyle = "italic";
+                }
+            };
+            // I really don't like how this is just copied and pasted 4 times, but something more complicated would be overkill I think.
+            [
+                ['x-center', XCenter], ['make-red', Red], ['big-n-bold', BigNBold], ['super-small', SuperSmall]
+            ].forEach(([name, content]) => {customElements.define(name, content);});
+        </script>
+    </body>
+
+
+
+</html>
