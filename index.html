@@ -12,6 +12,8 @@
         <x-center><make-red>This is supposed to be centered, and Red.</make-red></x-center>
         <x-center>However, This one is <big-n-bold>Big and Bold</big-n-bold></x-center>
         <x-center><super-small>And this one is  Super Small</super-small></x-center>
+        <br>
+        <x-center><super-small>Today is <current-date></current-date></super-small></x-center>
 
         <script>
             class XCenter extends HTMLElement {
@@ -40,11 +42,24 @@
                     this.style.fontStyle = "italic";
                 }
             };
+            class CurrentDate extends HTMLElement {
+               connectedCallback() {
+                   this.style.display = "contents";
+
+                   // Grab the current date and format it nicely (e.g., "November 10, 2026")
+                   const today = new Date().toLocaleDateString('en-CA', {
+                       year: 'numeric',
+                       month: 'long',
+                       day: 'numeric'
+                   });
+                   this.innerHTML = `${today}`;
+               }
+            };
             // I really don't like how this is just copied and pasted 4 times, but something more complicated would be overkill I think.
             [
-                ['x-center', XCenter], ['make-red', Red], ['big-n-bold', BigNBold], ['super-small', SuperSmall]
+                ['x-center', XCenter], ['make-red', Red], ['big-n-bold', BigNBold], ['super-small', SuperSmall], ['current-date', CurrentDate]
             ].forEach(([name, content]) => {customElements.define(name, content);});
-            // Just very simply iterating between 4 nested list elements,
+            // Just very simply iterating between 5 nested list elements,
             // instead of having to repeat the same line of code 4 times with different variables.
         </script>
     </body>
